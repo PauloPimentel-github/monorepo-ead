@@ -10,6 +10,7 @@ import lombok.EqualsAndHashCode;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -27,7 +28,7 @@ import java.util.UUID;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Entity
 @Table(name = "TB_USERS")
-public class UserModel implements Serializable {
+public class UserModel extends RepresentationModel<UserModel> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
