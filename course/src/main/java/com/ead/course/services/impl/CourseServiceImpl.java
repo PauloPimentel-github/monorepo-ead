@@ -34,7 +34,7 @@ public class CourseServiceImpl implements CourseService {
         if (!listModuleModel.isEmpty()) {
             listModuleModel.stream()
                     .forEach((moduleModel) ->  {
-                        List<LessonModel> listLessonModule = this.lessonRepository.findAllLessonsIntoCourse(moduleModel.getModuleId());
+                        List<LessonModel> listLessonModule = this.lessonRepository.findAllLessonsIntoModule(moduleModel.getModuleId());
                         if (!listLessonModule.isEmpty()) {
                             this.lessonRepository.deleteAll(listLessonModule);
                         }

@@ -1,5 +1,6 @@
 package com.ead.course.services;
 
+import com.ead.course.models.LessonModel;
 import com.ead.course.models.ModuleModel;
 
 import java.util.List;
@@ -16,4 +17,7 @@ public interface ModuleService {
 
     List<ModuleModel> findAllByCourse(UUID courseId);
 
+    Optional<ModuleModel> findById(UUID moduleId);
+
+    List<LessonModel> findAllByModule(UUID moduleId);
 }

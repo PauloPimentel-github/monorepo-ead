@@ -21,6 +21,8 @@ import java.util.UUID;
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class CourseController {
 
+    public static final String COURSE_NOT_FOUND = "Course Not Found";
+
     @Autowired
     private CourseService courseService;
 
@@ -37,7 +39,7 @@ public class CourseController {
     public ResponseEntity<Object> deleteCourse(@PathVariable UUID courseId) {
         Optional<CourseModel> courseModelOptional = this.courseService.findById(courseId);
         if (courseModelOptional.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Course Not Found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(COURSE_NOT_FOUND);
         }
         this.courseService.delete(courseModelOptional.get());
         return ResponseEntity.status(HttpStatus.OK).body("Course deleted successfully");
@@ -48,7 +50,7 @@ public class CourseController {
                                                @RequestBody @Valid CourseDto courseDto) {
         Optional<CourseModel> courseModelOptional = this.courseService.findById(courseId);
         if (courseModelOptional.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Course Not Found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(COURSE_NOT_FOUND);
         }
         var courseModel = courseModelOptional.get();
         courseModel.setLastUpdateDate(OffsetDateTime.now(ZoneId.of("UTC")));
@@ -65,7 +67,7 @@ public class CourseController {
     public ResponseEntity<Object> getOneCourse(@PathVariable UUID courseId) {
         Optional<CourseModel> courseModelOptional = this.courseService.findById(courseId);
         if (courseModelOptional.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Course Not Found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(COURSE_NOT_FOUND);
         }
         return ResponseEntity.status(HttpStatus.OK).body(courseModelOptional.get());
     }
