@@ -40,12 +40,12 @@ public class CourseModel implements Serializable {
 
     @CreationTimestamp
     @Column(name="creation_date", nullable = false)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'")
     private OffsetDateTime creationDate;
 
     @UpdateTimestamp
     @Column(name="last_update_date", nullable = false)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'")
     private OffsetDateTime lastUpdateDate;
 
     @Enumerated(EnumType.STRING)
