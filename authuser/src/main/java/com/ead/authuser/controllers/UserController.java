@@ -14,17 +14,11 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -45,8 +39,16 @@ public class UserController {
     @GetMapping
     public ResponseEntity<Page<UserModel>> getAllUsers(SpecificationTemplate.UserSpec spec,
                                                        @PageableDefault(page = 0, size = 10, sort = "userId", direction = Sort.Direction.ASC)
-                                                       Pageable pegeable) {
-        Page<UserModel> userModelPage = this.userService.findAll(spec, pegeable);
+                                                       Pageable pegeable,
+                                                       @RequestParam(required = false) UUID courseId) {
+
+        Page<UserModel> userModelPage = null;
+
+        if (Objects.nonNull(courseId)) {
+            userModelPage = this.userService.findAll(SpecificationTemplate.userCourseId(courseId).and(spec), pegeable);
+        } else {
+            userModelPage = this.userService.findAll(spec, pegeable);
+        }
 
         if (!userModelPage.isEmpty()) {
             userModelPage.toList().stream()

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -65,8 +66,14 @@ public class CourseController {
     @GetMapping
     public ResponseEntity<Page<CourseModel>> getAllCourses(SpecificationTemplate.CourseSpec spec,
                                                            @PageableDefault(page = 0, size = 10, sort = "courseId", direction = Sort.Direction.ASC)
-                                                                   Pageable pegeable) {
-        return ResponseEntity.status(HttpStatus.OK).body(this.courseService.findAll(spec, pegeable));
+                                                                   Pageable pegeable,
+                                                           @RequestParam(required = false) UUID userId) {
+        if (Objects.nonNull(userId)) {
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(this.courseService.findAll(SpecificationTemplate.courseUserId(userId).and(spec), pegeable));
+        } else {
+            return ResponseEntity.status(HttpStatus.OK).body(this.courseService.findAll(spec, pegeable));
+        }
     }
 
     @GetMapping("/{courseId}")
