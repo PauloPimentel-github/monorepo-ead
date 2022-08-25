@@ -1,11 +1,11 @@
 server:
-  port: 8087
+  port: 8081
 
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/ead-authuser
-    username: postgres
-    password: 123456
+    username: postgresuser
+    password: postgrespwd
   jpa:
     hibernate:
       ddl-auto: update
