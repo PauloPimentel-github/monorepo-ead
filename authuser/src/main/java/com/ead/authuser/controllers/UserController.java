@@ -34,7 +34,7 @@ public class UserController {
     public static final String USER_NOT_FOUND = "User not found.";
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @GetMapping
     public ResponseEntity<Page<UserModel>> getAllUsers(SpecificationTemplate.UserSpec spec,
