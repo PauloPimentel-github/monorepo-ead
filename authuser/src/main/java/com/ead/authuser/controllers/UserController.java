@@ -31,7 +31,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @RequestMapping("/users")
 public class UserController {
 
-    public static final String USER_NOT_FOUND = "User not found.";
+    private static final String USER_NOT_FOUND = "User not found.";
 
     @Autowired
     private UserService userService;

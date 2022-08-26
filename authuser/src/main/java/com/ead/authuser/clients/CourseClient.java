@@ -5,6 +5,7 @@ import com.ead.authuser.dtos.ResponsePageDto;
 import com.ead.authuser.services.UtilsService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,7 +20,10 @@ import java.util.UUID;
 
 @Log4j2
 @Component
-public class UserClient {
+public class CourseClient {
+
+    @Value("${ead.api.url.course}")
+    private String requestURLCourse;
 
     @Autowired
     private RestTemplate restTemplate;
@@ -31,7 +35,7 @@ public class UserClient {
         List<CourseDto> searchResult = null;
         ResponseEntity<ResponsePageDto<CourseDto>> result = null;
 
-        String endpoint = this.utilsService.createEndpoint(userId, pageable);
+        String endpoint = this.utilsService.createEndpoint(this.requestURLCourse, userId, pageable);
         log.debug("Resquest ENDPOINT: {}", endpoint);
         log.info("Resquest ENDPOINT: {}", endpoint);
 
