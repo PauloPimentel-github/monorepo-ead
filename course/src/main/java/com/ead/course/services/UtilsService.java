@@ -8,4 +8,6 @@ import java.util.UUID;
 public interface UtilsService {
 
     String createUrlGetAllUsersByCourse(String requestURI, UUID userId, Pageable pageable);
+
+    String createUrlGetOneUserById(String requestURI, UUID userId);
 }

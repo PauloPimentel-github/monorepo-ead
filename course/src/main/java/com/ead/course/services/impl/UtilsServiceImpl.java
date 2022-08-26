@@ -18,4 +18,11 @@ public class UtilsServiceImpl implements UtilsService {
         endpoint.append("&sort=" + pageable.getSort().toString().replaceAll(": ", ","));
         return endpoint.toString();
     }
+
+    @Override
+    public String createUrlGetOneUserById(String requestURI, UUID userId) {
+        StringBuilder endpoint = new StringBuilder(requestURI);
+        endpoint.append("/users/" + userId);
+        return endpoint.toString();
+    }
 }
