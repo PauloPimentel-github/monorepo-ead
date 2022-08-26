@@ -5,6 +5,7 @@ import com.ead.course.dtos.UserDto;
 import com.ead.course.services.UtilsService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -27,12 +28,14 @@ public class CourseClient {
     @Autowired
     private UtilsService utilsService;
 
+    @Value("${ead.api.url.authuser}")
+    private String requestURLAuthuser;
 
     public Page<UserDto> getAllUsersByCourse(UUID courseId, Pageable pageable) {
         List<UserDto> searchResult = null;
         ResponseEntity<ResponsePageDto<UserDto>> result = null;
 
-        String endpoint = this.utilsService.createEndpoint(courseId, pageable);
+        String endpoint = this.utilsService.createUrlGetAllUsersByCourse(requestURLAuthuser, courseId, pageable);
         log.debug("Resquest ENDPOINT: {}", endpoint);
         log.info("Resquest ENDPOINT: {}", endpoint);
 

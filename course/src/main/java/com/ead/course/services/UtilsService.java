@@ -7,5 +7,5 @@ import java.util.UUID;
 
 public interface UtilsService {
 
-    String createEndpoint(UUID userId, Pageable pageable);
+    String createUrlGetAllUsersByCourse(String requestURI, UUID userId, Pageable pageable);
 }
