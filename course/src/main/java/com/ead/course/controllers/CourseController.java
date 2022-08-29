@@ -56,11 +56,14 @@ public class CourseController {
 
     @DeleteMapping("/{courseId}")
     public ResponseEntity<Object> deleteCourse(@PathVariable UUID courseId) {
+        log.debug("DELETE deleteCourse courseId received {}", courseId);
         Optional<CourseModel> courseModelOptional = this.courseService.findById(courseId);
         if (courseModelOptional.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(COURSE_NOT_FOUND);
         }
         this.courseService.delete(courseModelOptional.get());
+        log.debug("DELETE deleteCourse courseId deleted {}", courseId);
+        log.info("Course deleted successfully courseId {}", courseId);
         return ResponseEntity.status(HttpStatus.OK).body("Course deleted successfully");
     }
 
