@@ -25,4 +25,12 @@ public class UtilsServiceImpl implements UtilsService {
         endpoint.append("/users/" + userId);
         return endpoint.toString();
     }
+
+    @Override
+    public String postSubscriptionUserInCourse(String requestURI, UUID userId) {
+        StringBuilder endpoint = new StringBuilder(requestURI);
+        endpoint.append("/users/" + userId);
+        endpoint.append("/courses/subscription");
+        return endpoint.toString();
+    }
 }
