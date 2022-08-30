@@ -38,4 +38,4 @@ logging:
 ead:
   api:
     url:
-      authuser: http://localhost:8081
+      authuser: http://ead-authuser-service

@@ -9,8 +9,8 @@ import java.util.UUID;
 @Service
 public class UtilsServiceImpl implements UtilsService {
 
-    public String createEndpoint(String requestURLCourse, UUID userId, Pageable pageable) {
-        StringBuilder endpoint = new StringBuilder(requestURLCourse);
+    public String createEndpoint(String requestURL, UUID userId, Pageable pageable) {
+        StringBuilder endpoint = new StringBuilder(requestURL);
         endpoint.append("/courses");
         endpoint.append("?userId=" + userId);
         endpoint.append("&page=" + pageable.getPageNumber());

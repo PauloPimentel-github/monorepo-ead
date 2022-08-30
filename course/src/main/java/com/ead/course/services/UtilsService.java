@@ -7,9 +7,9 @@ import java.util.UUID;
 
 public interface UtilsService {
 
-    String createUrlGetAllUsersByCourse(String requestURI, UUID userId, Pageable pageable);
+    String createUrlGetAllUsersByCourse(String requestURL, UUID userId, Pageable pageable);
 
-    String createUrlGetOneUserById(String requestURI, UUID userId);
+    String createUrlGetOneUserById(String requestURL, UUID userId);
 
-    String postSubscriptionUserInCourse(String requestURI, UUID userId);
+    String postSubscriptionUserInCourse(String requestURL, UUID userId);
 }
