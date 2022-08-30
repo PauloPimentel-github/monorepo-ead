@@ -38,8 +38,12 @@ public class UserCourseCotroller {
     private CourseClient courseClient;
 
     @GetMapping("/users/{userId}/courses")
-    public ResponseEntity<Page<CourseDto>> getAllCoursesByUser(@PageableDefault(page = 0, size = 10, sort = "courseId", direction = Sort.Direction.ASC) Pageable pageable,
+    public ResponseEntity<Object> getAllCoursesByUser(@PageableDefault(page = 0, size = 10, sort = "courseId", direction = Sort.Direction.ASC) Pageable pageable,
                                                                @PathVariable UUID userId) {
+        Optional<UserModel> userModelOptional = this.userService.findById(userId);
+        if (!userModelOptional.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(USER_NOT_FOUND);
+        }
         return ResponseEntity.status(HttpStatus.OK).body(this.courseClient.getAllCoursesByUser(userId, pageable));
     }
 

@@ -35,7 +35,7 @@ public class CourseClient {
         List<CourseDto> searchResult = null;
         ResponseEntity<ResponsePageDto<CourseDto>> result = null;
 
-        String endpoint = this.utilsService.createEndpoint(this.requestURLCourse, userId, pageable);
+        String endpoint = this.utilsService.createUrlGetAllCoursesByUser(this.requestURLCourse, userId, pageable);
         log.debug("Resquest ENDPOINT: {}", endpoint);
         log.info("Resquest ENDPOINT: {}", endpoint);
 
@@ -51,5 +51,10 @@ public class CourseClient {
         }
         log.info("Eding request /courses userID: {}", userId);
         return result.getBody();
+    }
+
+    public void deleteUserInCourse(UUID userId) {
+        String endpoint = this.utilsService.createUrlDeleteUserInCourse(this.requestURLCourse, userId);
+        this.restTemplate.exchange(endpoint, HttpMethod.DELETE, null, String.class);
     }
 }
