@@ -40,4 +40,4 @@ logging:
 ead:
   api:
     url:
-      course: http://ead-course-service
+      course: http://ead-course-service/ead-course
