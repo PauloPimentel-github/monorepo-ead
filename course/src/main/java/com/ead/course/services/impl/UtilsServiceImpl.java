@@ -20,17 +20,24 @@ public class UtilsServiceImpl implements UtilsService {
     }
 
     @Override
-    public String createUrlGetOneUserById(String requestURI, UUID userId) {
-        StringBuilder endpoint = new StringBuilder(requestURI);
+    public String createUrlGetOneUserById(String requestURL, UUID userId) {
+        StringBuilder endpoint = new StringBuilder(requestURL);
         endpoint.append("/users/" + userId);
         return endpoint.toString();
     }
 
     @Override
-    public String postSubscriptionUserInCourse(String requestURI, UUID userId) {
-        StringBuilder endpoint = new StringBuilder(requestURI);
+    public String createUrlPostSubscriptionUserInCourse(String requestURL, UUID userId) {
+        StringBuilder endpoint = new StringBuilder(requestURL);
         endpoint.append("/users/" + userId);
         endpoint.append("/courses/subscription");
+        return endpoint.toString();
+    }
+
+    @Override
+    public String createUrlDeleteCourseInAuthUser(String requestURL, UUID courseId) {
+        StringBuilder endpoint = new StringBuilder(requestURL);
+        endpoint.append("/users/courses/" + courseId);
         return endpoint.toString();
     }
 }

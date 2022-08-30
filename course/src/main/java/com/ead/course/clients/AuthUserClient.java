@@ -60,10 +60,15 @@ public class AuthUserClient {
     }
 
     public void postSubscriptionUserInCourse(UUID courseId, UUID userId) {
-        String endpoint = this.utilsService.postSubscriptionUserInCourse(this.requestURLAuthuser, userId);
+        String endpoint = this.utilsService.createUrlPostSubscriptionUserInCourse(this.requestURLAuthuser, userId);
         var courseUserDto = new CourseUserDto();
         courseUserDto.setCourseId(courseId);
         courseUserDto.setUserId(userId);
         this.restTemplate.postForEntity(endpoint, courseUserDto, String.class);
+    }
+
+    public void deleteCourseInAuthUser(UUID courseId) {
+        String endpoint = this.utilsService.createUrlDeleteCourseInAuthUser(this.requestURLAuthuser, courseId);
+        this.restTemplate.exchange(endpoint, HttpMethod.DELETE, null, String.class);
     }
 }

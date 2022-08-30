@@ -40,8 +40,12 @@ public class CourseUserController {
     private AuthUserClient authUserClient;
 
     @GetMapping("/courses/{courseId}/users")
-    public ResponseEntity<Page<UserDto>> getAllUsersByCourse(@PageableDefault(page = 0, size = 10, sort = "userId", direction = Sort.Direction.ASC) Pageable pageable,
+    public ResponseEntity<Object> getAllUsersByCourse(@PageableDefault(page = 0, size = 10, sort = "userId", direction = Sort.Direction.ASC) Pageable pageable,
                                                              @PathVariable UUID courseId) {
+        Optional<CourseModel> courseModelOptional = this.courseService.findById(courseId);
+        if (courseModelOptional.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(COURSE_NOT_FOUND);
+        }
         return ResponseEntity.status(HttpStatus.OK).body(this.authUserClient.getAllUsersByCourse(courseId, pageable));
     }
 
