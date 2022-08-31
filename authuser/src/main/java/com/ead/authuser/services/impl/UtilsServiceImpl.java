@@ -18,11 +18,4 @@ public class UtilsServiceImpl implements UtilsService {
         endpoint.append("&sort=" + pageable.getSort().toString().replaceAll(": ", ","));
         return endpoint.toString();
     }
-
-    @Override
-    public String createUrlDeleteUserInCourse(String requestURL, UUID userId) {
-        StringBuilder endpoint = new StringBuilder(requestURL);
-        endpoint.append("/courses/users/" + userId);
-        return endpoint.toString();
-    }
 }

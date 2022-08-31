@@ -52,9 +52,4 @@ public class CourseClient {
         log.info("Eding request /courses userID: {}", userId);
         return result.getBody();
     }
-
-    public void deleteUserInCourse(UUID userId) {
-        String endpoint = this.utilsService.createUrlDeleteUserInCourse(this.requestURLCourse, userId);
-        this.restTemplate.exchange(endpoint, HttpMethod.DELETE, null, String.class);
-    }
 }

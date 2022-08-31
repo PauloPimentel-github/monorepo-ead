@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -39,22 +38,12 @@ public class UserController {
     @GetMapping
     public ResponseEntity<Page<UserModel>> getAllUsers(SpecificationTemplate.UserSpec spec,
                                                        @PageableDefault(page = 0, size = 10, sort = "userId", direction = Sort.Direction.ASC)
-                                                       Pageable pageable,
-                                                       @RequestParam(required = false) UUID courseId) {
-
-        Page<UserModel> userModelPage = null;
-
-        if (Objects.nonNull(courseId)) {
-            userModelPage = this.userService.findAll(SpecificationTemplate.userCourseId(courseId).and(spec), pageable);
-        } else {
-            userModelPage = this.userService.findAll(spec, pageable);
-        }
-
+                                                       Pageable pageable) {
+        Page<UserModel> userModelPage = this.userService.findAll(spec, pageable);
         if (!userModelPage.isEmpty()) {
             userModelPage.toList().stream()
                     .forEach(user -> user.add(linkTo(methodOn(UserController.class).getOneUser(user.getUserId())).withSelfRel()));
         }
-
         return ResponseEntity.status(HttpStatus.OK).body(userModelPage);
     }
 
@@ -145,5 +134,4 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.OK).body(userModel);
         }
     }
-
 }
