@@ -19,6 +19,8 @@ spring:
     properties:
       hibernate:
         show_sql: true
+  rabbitmq:
+    addresses: amqps://mtihecdc:z2qjgj7BT86LR9xlYUm4cTjHbTeckseh@woodpecker.rmq.cloudamqp.com/mtihecdc
   output:
     ansi:
       enabled: ALWAYS
