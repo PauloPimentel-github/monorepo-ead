@@ -27,7 +27,11 @@ public class UserConsumer {
 
         switch (ActionType.valueOf(userEventDto.getActionType())) {
             case CREATE:
+            case UPDATE:
                 this.userService.save(userModel);
+                break;
+            case DELETE:
+                this.userService.delete(userModel.getUserId());
                 break;
         }
     }
