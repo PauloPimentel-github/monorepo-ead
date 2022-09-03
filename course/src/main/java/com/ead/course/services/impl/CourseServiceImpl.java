@@ -48,6 +48,8 @@ public class CourseServiceImpl implements CourseService {
                     });
             this.moduleRepository.deleteAll(listModuleModel);
         }
+
+        this.courseRepository.deleteCourseUserByCourse(courseModel.getCourseId());
         this.courseRepository.delete(courseModel);
     }
 
