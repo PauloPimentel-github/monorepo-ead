@@ -14,6 +14,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -35,6 +36,7 @@ public class ModuleController {
     @Autowired
     private CourseService courseService;
 
+    @PreAuthorize("hasAnyRole('INSTRUCTOR')")
     @PostMapping("/courses/{courseId}/modules")
     public ResponseEntity<Object> saveModule(@PathVariable UUID courseId,
                                              @RequestBody @Valid ModuleDto moduleDto) {
@@ -49,6 +51,7 @@ public class ModuleController {
         return ResponseEntity.status(HttpStatus.CREATED).body(this.moduleService.save(moduleModel));
     }
 
+    @PreAuthorize("hasAnyRole('INSTRUCTOR')")
     @DeleteMapping("/courses/{courseId}/modules/{moduleId}")
     public ResponseEntity<Object> deleteModule(@PathVariable UUID courseId,
                                                @PathVariable UUID moduleId) {
@@ -60,6 +63,7 @@ public class ModuleController {
         return ResponseEntity.status(HttpStatus.OK).body("Module deleted successfully");
     }
 
+    @PreAuthorize("hasAnyRole('INSTRUCTOR')")
     @PutMapping("/courses/{courseId}/modules/{moduleId}")
     public ResponseEntity<Object> updateModule(@PathVariable UUID courseId,
                                                @PathVariable UUID moduleId,
@@ -73,6 +77,7 @@ public class ModuleController {
         return ResponseEntity.status(HttpStatus.OK).body(this.moduleService.save(moduleModel));
     }
 
+    @PreAuthorize("hasAnyRole('STUDENT')")
     @GetMapping("/courses/{courseId}/modules")
     public ResponseEntity<Page<ModuleModel>> getAllModules(@PathVariable UUID courseId,
                                                            SpecificationTemplate.ModuleSpec spec,
@@ -82,6 +87,7 @@ public class ModuleController {
                 .body(this.moduleService.findAllByCourse(SpecificationTemplate.moduleCourseId(courseId).and(spec), pegeable));
     }
 
+    @PreAuthorize("hasAnyRole('STUDENT')")
     @GetMapping("/courses/{courseId}/modules/{moduleId}")
     public ResponseEntity<Object> getOneModule(@PathVariable UUID courseId,
                                                            @PathVariable UUID moduleId) {
