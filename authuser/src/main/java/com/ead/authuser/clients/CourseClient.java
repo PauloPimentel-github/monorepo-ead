@@ -12,6 +12,8 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -37,24 +39,25 @@ public class CourseClient {
 
     @CircuitBreaker(name = "circuitbreakerInstance")
     //@Retry(name = "retryInstance", fallbackMethod = "retryFallback")
-    public Page<CourseDto> getAllCoursesByUser(UUID userId, Pageable pageable) {
+    public Page<CourseDto> getAllCoursesByUser(UUID userId, Pageable pageable, String token) {
         List<CourseDto> searchResult = null;
         ResponseEntity<ResponsePageDto<CourseDto>> result = null;
 
         String endpoint = this.utilsService.createUrlGetAllCoursesByUser(this.requestURLCourse, userId, pageable);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", token);
+        HttpEntity<String> requestEntity = new HttpEntity<>("parameters", headers);
+
         log.debug("Resquest ENDPOINT: {}", endpoint);
         log.info("Resquest ENDPOINT: {}", endpoint);
 
-        try {
-            ParameterizedTypeReference<ResponsePageDto<CourseDto>> responseType =
-                    new ParameterizedTypeReference<ResponsePageDto<CourseDto>>() {};
+        ParameterizedTypeReference<ResponsePageDto<CourseDto>> responseType =
+                new ParameterizedTypeReference<ResponsePageDto<CourseDto>>() {};
 
-            result = this.restTemplate.exchange(endpoint.toString(), HttpMethod.GET, null, responseType);
-            searchResult = result.getBody().getContent();
-            log.debug("Response Number of Elements: {}", searchResult.size());
-        } catch (HttpStatusCodeException exception) {
-            log.error("Error request /courses {}", exception.getMessage(), exception);
-        }
+        result = this.restTemplate.exchange(endpoint.toString(), HttpMethod.GET, requestEntity, responseType);
+        searchResult = result.getBody().getContent();
+        log.debug("Response Number of Elements: {}", searchResult.size());
         log.info("Eding request /courses userID: {}", userId);
         return result.getBody();
     }
