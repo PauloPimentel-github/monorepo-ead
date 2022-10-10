@@ -1,0 +1,3 @@
+spring:
+  config:
+    import: 'optional:${CONFIG_SERVER_URL}'
