@@ -2,6 +2,7 @@ package com.phpimentel.payment.consumers;
 
 import com.phpimentel.payment.dtos.UserEventDto;
 import com.phpimentel.payment.enums.ActionType;
+import com.phpimentel.payment.enums.PaymentStatus;
 import com.phpimentel.payment.services.UserService;
 import org.springframework.amqp.core.ExchangeTypes;
 import org.springframework.amqp.rabbit.annotation.Exchange;
@@ -27,6 +28,9 @@ public class UserConsumer {
 
         switch (ActionType.valueOf(userEventDto.getActionType())) {
             case CREATE:
+                userModel.setPaymentStatus(PaymentStatus.NOTSTARTED);
+                this.userService.save(userModel);
+                break;
             case UPDATE:
                 this.userService.save(userModel);
                 break;
