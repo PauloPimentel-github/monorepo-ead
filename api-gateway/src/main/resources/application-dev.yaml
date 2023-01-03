@@ -1,4 +1,7 @@
 spring:
+  output:
+    ansi:
+      enabled: always
   config:
     import: 'configserver:'
   cloud:
@@ -7,3 +10,17 @@ spring:
         serviceId: ead-config-server
       username: configserver
       password: 'ead123cs'
+    gateway:
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "http://localhost:3000"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+            allowedHeaders: "*"

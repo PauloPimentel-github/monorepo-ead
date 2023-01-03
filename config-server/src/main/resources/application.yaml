@@ -1,7 +1,4 @@
 spring:
-  output:
-    ansi:
-      enabled: always
   application:
     name: ead-config-server
   profiles:

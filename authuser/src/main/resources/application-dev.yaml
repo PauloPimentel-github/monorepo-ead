@@ -1,4 +1,7 @@
 spring:
+  output:
+    ansi:
+      enabled: always
   config:
     import: 'configserver:'
   cloud:
